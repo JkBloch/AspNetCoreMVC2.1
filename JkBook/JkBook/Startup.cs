@@ -15,6 +15,7 @@ namespace JkBook
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -25,10 +26,37 @@ namespace JkBook
                 app.UseDeveloperExceptionPage();
             }
 
-            app.Run(async (context) =>
+
+            app.UseStaticFiles();
+
+            app.UseMvc(routes =>
             {
-                await context.Response.WriteAsync("Hello World HRU!");
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            //app.Use(async (context, next) =>
+            //{
+            //    await context.Response.WriteAsync(env.EnvironmentName);
+            //    await context.Response.WriteAsync(env.EnvironmentName);
+
+            //});
+
+            //app.Use(async (context, next) =>
+            //{
+            //    await context.Response.WriteAsync("Hello from my second middleware");
+            //});
+
+            //app.Use(async (context, next) =>
+            //{
+            //    await context.Response.WriteAsync("Hello from my third middleware");
+            //    await next();
+            //});
+            //app.Run(async (context) =>
+            //{
+            //    await context.Response.WriteAsync("Hello World HRU hi!");
+            //});
         }
     }
 }
