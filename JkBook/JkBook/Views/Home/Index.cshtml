@@ -1,48 +1,109 @@
-﻿
-@{
-    Layout = null;
+﻿@{
+    var bookInfo = ViewData["bookdetail"] as BookModel;
+    dynamic data = ViewBag.data;
+    ViewData["Title"] = "Home";
+    var mybook = ViewData["book"] as BookModel;
 }
 
-<!DOCTYPE html>
+@inject JkBook.Repository.IBookRepository _bookRepository
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
-    <link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
-    <link href="~/css/Site.css" rel="stylesheet" />
-</head>
-<body class="container">
 
-    <h1 class="h1">Welcome to book store appliction.</h1>
-    <input type="button" value="Click me" class="btn btn-success" />
-    <h1>Welcome to book store appliction.</h1>
-    <img src="~/images/logo.png" class="logo" alt="logo" />
-    <img src="~/MyStaticFile/whiteTiger.jpg" alt="white tiger" />
+<section class="jumbotron text-center">
+    <div class="container">
+        <h1>Welcome to Bookstore </h1>
+        <div class="container">
+            @using (Html.BeginForm())
+            {
+                <input type="text" name="toEmailId" class="form-control" />
+                <button type="submit" class="btn btn-warning" asp-controller="Home" asp-action="SendEmailToUser" >Send Email</button>
+            }
 
-    <h1>@DateTime.Now</h1>
-    <h1>Sum = @(3 + 5)</h1>
-    <h1>Multiline</h1>
-    @{
-        int a = 10;
-        int b = 25;
-        int c = a + b;
-    }
-    @for (int i = 0; i < 10; i++)
-    {
-        <h1>Welcome to book store appliction.</h1>
-    }
-    <h1>Sum = @c</h1>
-    <h2> my emailid is jk@abc.com </h2>
-    <h2> Twitter @@jkbloch </h2>
-    <p>This is the home page</p>
-</body>
-<script src="~/lib/jquery/jquery.js"></script>
+        </div>
+        <p class="p-2">
+            @ViewBag.AppSettingData
+        </p>
+        <p class="p-2">
+            ViewBag Example : - &nbsp;&nbsp;
+            @ViewBag.Name
+            &nbsp;
+            @ViewBag.jdata
+            &nbsp;
+            @data.Id
+            &nbsp;
+            @data.Title
+            &nbsp;
+            @ViewBag.Type.Id
+            &nbsp;
+            @ViewBag.Type.Author
 
-</html>
-<script>
+        </p>
+        <p class="p-2">
+            ViewData Example : - &nbsp;&nbsp;
+            @ViewData["Name"]
+            &nbsp;
+            @bookInfo.Id
+            &nbsp;
+            @bookInfo.Title
+            &nbsp;
+            @bookInfo.Author
 
-    $(document).ready(function () {
-        alert("Page Loaded successfully");
-    });
-</script>
+        </p>
+        <p class="p-2">
+            ViewDataAttribute Example : - &nbsp;&nbsp;
+            @ViewData["CustomProp"]
+            &nbsp;
+            @mybook.Id
+            &nbsp;
+            @mybook.Title
+            &nbsp;
+            @mybook.Author
+        </p>
+        <p class="lead text-muted">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        </p>
+        <p>
+            <a href="#" class="btn btn-primary my-2">Search books</a>
+
+        </p>
+        <div class="form-group">
+            <select class="form-select">
+                @foreach (var book in await _bookRepository.GetAllBooks())
+                {
+                    <option value="@book.Title">@book.Title</option>
+                }
+            </select>
+        </div>
+    </div>
+
+</section>
+
+<div>
+    <div class="container">
+        <h3 class="h3">Top Books</h3>
+        <big>Top Books</big>
+        <p big class="bg-primary">Top Books</p>
+        @await Component.InvokeAsync("TopBooks", new { count = 5 }) <br />
+        @*<vc:top-books count="3"></vc:top-books>*@
+
+    </div>
+</div>
+<div class="alert alert-info alert-dismissible">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Info!</strong> This alert box could indicate a neutral informative change or action.
+</div>
+
+@*<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>*@
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            //alert("document is ready")
+        })
+    </script>
+}
+

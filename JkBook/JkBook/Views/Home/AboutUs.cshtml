@@ -1,8 +1,7 @@
-﻿
-@{
-    Layout = null;
+﻿@{
+  
+    ViewData["Title"] = "About us";
 }
-
 <!DOCTYPE html>
 
 <html>
@@ -12,5 +11,8 @@
 </head>
 <body>
     <h1>This is AboutUs page.</h1>
+    <p class="display-6 text-success">@ViewData["Id"]</p>
+    <p class="display-5 text-primary">@ViewData["name"]</p>
+    
 </body>
 </html>

@@ -1,0 +1,22 @@
+﻿
+@model BookModel
+
+<div class="card" style="width: 18rem;">
+    <img src="@(string.IsNullOrEmpty(Model.CoverImageUrl)?"/Images/img2.png":Model.CoverImageUrl)" class="img-thumbnail" />
+    <div class="card-body">
+        <h5 class="card-title">@(string.IsNullOrEmpty(Model.Title)?"Name is not available": Model.Title )</h5>
+        <p class="card-text">@(string.IsNullOrEmpty(Model.Description)?"Description is not available": Model.Description ))</p>
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="btn-group">
+                <a asp-controller="book" asp-action="getbook" asp-route-Id="@Model.Id" asp-route-bookname="@Model.Title" class="btn btn-sm btn-outline-secondary">View Detail</a>
+            </div>
+            @*<div class="btn-group">
+                    <a asp-controller="book" asp-fragment="similarBooks" asp-action="getbookdynamic" asp-all-route-data="@lstParameter" class="btn btn-sm btn-outline-secondary">Dyanamic Detail</a>
+                </div>
+                <div class="btn-group">
+                    <a asp-route="bookDetailsRoute" asp-route-Id="@book.Id" class="btn btn-sm btn-outline-secondary">Route Detail</a>
+                </div>*@
+            <small class="text-muted">@(string.IsNullOrEmpty(Model.Author)?"NA": Model.Author)</small>
+        </div>
+    </div>
+</div>

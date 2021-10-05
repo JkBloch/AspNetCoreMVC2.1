@@ -1,0 +1,66 @@
+﻿@model JkBook.Models.GridModelList
+@{
+    ViewData["Title"] = "Grid";
+
+}
+
+
+
+@if (@Model != null)
+{
+    <br />
+    <br />
+
+    <table id="tblGrid">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var data in @Model.GridData)
+            {
+                <tr>
+                    <td>@data.Id </td>
+                    <td>@data.Name </td>
+                    <td>@data.Desc </td>
+                    <td>@data.Date </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+}
+
+
+@section scripts{
+
+    @*<script src="~/js/jquery-1.12.4.js"></script>*@
+    <script src="~/js/jquery.dataTables.min.js"></script>
+    <script src="~/js/jszip.min.js"></script>
+    <script src="~/js/dataTables.buttons.min.js"></script>
+    <script src="~/js/buttons.html5.min.js"></script>
+    <script src="~/js/jquery-ui.min.js"></script>
+    <link href="~/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <script>
+
+
+        $(document).ready(function () {
+            gridDataTableView("Grid Example.xls");
+        });
+
+        gridDataTableView = function (fname) {
+            $('#tblGrid').dataTable({
+                "bFilter": true,
+                "bLengthChange": false, "bPaginate": true, "bInfo": true,
+                dom: 'Bfrtip',
+                "order": [[0, 'desc'], [1, 'desc']],
+                buttons: [{ extend: 'excelHtml5', text: 'Export to Excel', className: 'link_button', title: fname }]
+            });
+        }
+    </script>
+    }

@@ -1,0 +1,161 @@
+﻿
+@model IEnumerable<DepartmentModel>
+
+
+@{
+    ViewData["Title"] = "Department";
+}
+
+
+<h4>Department </h4>
+<hr />
+<div class="container">
+    <div class="row">
+        <partial name="InsertDepartment" model="Model.FirstOrDefault()" >
+        
+    </div>
+    <form method="post">
+        <div class="row">
+            <div class="col-md-4">
+                <table id="tblDepartmentinfo" class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>Department Id</th>
+                            <th class="hideCol hideHideCol_2">Department Code</th>
+                            <th class="hideCol hideHideCol_3">Department Name</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                    
+                            <tr id="Tr_@item.Id.ToString()">
+                                <td id="tdDId_@item.Id.ToString()">@item.Id</td>
+                                <td id="tdDName_@item.Id.ToString()">@item.DepartmentName</td>
+                                <td id="tdDCode_@item.Id.ToString()">@item.DepartmentCode</td>
+
+                             <td id="txtDName_@item.Id.ToString()" style="display:none;"><input type='text' id="txtDName_@item.Id.ToString()" value="@item.DepartmentName" /></td>
+
+                                <td id="txtDCode_@item.Id.ToString()" style="display:none;"><input type='text' id="txtDCode_@item.Id.ToString()" value="@item.DepartmentCode" /></td>
+                                <td id="txtDName_@item.Id.ToString()" style="display:none;"><input type='text' id="txtDName_@item.Id.ToString()" value="@item.DepartmentName" /></td>
+
+
+                                <td>
+                                    <input type="button" class="btn btn-primary" id="btnEditProd_@item.Id.ToString()" value="Edit" onclick="editRowProductData(@item.Id.ToString())" />
+
+                                    <input type="button" class="btn btn-success" id="btnUpdateProd_@item.Id.ToString()" value="Update" style="display:none;" onclick="saveProdData(@item.Id.ToString(),@item.Id.ToString())" />
+
+                                    <input type="submit" class="btn btn-danger" id="btnDeleteProd_@item.Id.ToString()" value="Delete" formaction="/department/delete/@item.Id" />
+
+                                    <input type="button" class="btn btn-warning" value="Cancel" onclick="removeProdData(@item.Id)" style="display:none;" id="btnCancelProd_@item.Id.ToString()" />
+
+
+                                </td>
+
+                            </tr>
+                      
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </form>
+
+
+</div>
+<script>
+    function editRowProductData(i) {
+
+        $("#tblDepartmentinfo").find('#btnEditProd_' + i.toString()).hide();
+        $("#tblDepartmentinfo").find('#btnDeleteProd_' + i.toString()).hide();
+
+
+        $("#tblDepartmentinfo").find('#tdDCode_' + i.toString()).hide();
+        $("#tblDepartmentinfo").find('#tdDName_' + i.toString()).hide();
+        
+
+        $("#tblDepartmentinfo").find('#btnUpdateProd_' + i.toString()).show();
+        $("#tblDepartmentinfo").find('#btnCancelProd_' + i.toString()).show();
+
+
+
+        $("#tblDepartmentinfo").find('#txtDCode_' + i.toString()).show();
+        $("#tblDepartmentinfo").find('#txtDName_' + i.toString()).show();
+
+
+    }
+
+
+    function removeProdData(i) {
+
+        $("#tblDepartmentinfo").find('#btnEditProd_' + i.toString()).show();
+        $("#tblDepartmentinfo").find('#btnDeleteProd_' + i.toString()).show();
+
+
+        $("#tblDepartmentinfo").find('#tdDCode_' + i.toString()).show();
+        $("#tblDepartmentinfo").find('#tdDName_' + i.toString()).show();
+        
+
+        $("#tblDepartmentinfo").find('#btnUpdateProd_' + i.toString()).hide();
+        $("#tblDepartmentinfo").find('#btnCancelProd_' + i.toString()).hide();
+
+
+        $("#tblDepartmentinfo").find('#txtDCode_' + i.toString()).hide();
+        $("#tblDepartmentinfo").find('#txtDName_' + i.toString()).hide();
+        
+    }
+</script>
+
+<script>
+    function saveProdData(i, custid) {
+        if (validateProdForm(i)) {
+            var txtcustName = $("#tblProdinfo").find("input[id=txtCName_" + i.toString() + "]").val();
+            var prodIDd = i;
+            var txtprodName = $("#tblProdinfo").find("input[id=txtPName_" + i.toString() + "]").val();
+            var txtprodPrice = $("#tblProdinfo").find("input[id=txtPPrice_" + i.toString() + "]").val();
+            var txthdnCustId = custid;
+            console.log("txtprodPrice : " + txtprodPrice);
+
+
+            var item = {};
+            var jsonObj = [];
+
+            item["CustId"] = txthdnCustId;
+            item["CustName"] = txtcustName;
+            item["ProdId"] = prodIDd;
+            item["ProdName"] = txtprodName;
+            item["ProdPrice"] = txtprodPrice;
+            jsonObj.push(item);
+
+
+            console.log("jsonObj : " + jsonObj);
+            var jsonString = JSON.stringify(jsonObj);
+            console.log("jsonString : " + jsonString);
+
+            $.ajax({
+                url: "/Home/SaveDataToDB",
+                type: "POST",
+                data: { custId: txthdnCustId, dataToSend: jsonString, custName: txtcustName },
+                success: function (data) {
+                    if (data.status == "Success") {
+                        BootstrapDialog.show({
+                            title: 'Success!',
+                            message: "Data Updated Successfully!",
+                            buttons: [{
+                                label: 'OK',
+                                action: function (dialog) {
+                                    window.location.href = "/Home/Index";
+                                    removeProdData(i);
+                                    $("#btnAddProd").attr("disabled", false);
+                                    dialog.close();
+                                }
+                            }]
+                        });
+                    }
+
+                }
+            });
+        }
+    }
+</script>

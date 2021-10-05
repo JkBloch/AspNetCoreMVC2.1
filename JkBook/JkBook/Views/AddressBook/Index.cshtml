@@ -1,0 +1,530 @@
+﻿
+@model IEnumerable<AddressBookModel>
+
+
+@{
+    ViewData["Title"] = "AddressBook";
+}
+<style>
+    .gridButton {
+        height: 30px !important;
+    }
+</style>
+
+
+<div class="container">
+    <!-- Modal -->
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog bg-success">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Success</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="bg-success"> Record Updated Successfully clik ok</p>
+                </div>
+                <div class="modal-footer">
+                    <form method="post">
+                        <input type="submit" class="btn btn-primary" asp-controller="AddressBook" asp-action="index" value="OK">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h4>Address Book </h4>
+    <hr />
+    <div class="row m-lg-0">
+        @*<partial name="InsertAddressBook" model="Model.FirstOrDefault()">*@
+        <button class="btn btn-primary" style="width:130px!important" id="btnAddAddress" onclick="AddRowAddressData(0)"><i class="fa fa-plus"></i> New Address</button>
+
+    </div>
+    <div class="row mt-2">
+        <form method="post">
+            <div class="row">
+                <div >
+                    <table id="tblGrid"  class="table table-bordered table-hover tab-content text-sm-start "   >
+                        <thead>
+                            <tr>
+                                <th style="width:200px!important;">Name</th>
+                                <th style="display:none;">Name</th>
+                                <th>Address</th>
+                                <th style="display:none;">Address</th>
+                                <th>City</th>
+                                <th style="display:none;">City</th>
+                                <th>State</th>
+                                <th style="display:none;">State</th>
+                                <th>Pincode</th>
+                                    <th style="display:none;">Pincode</th>
+                                    @*<th>MobileNo</th>
+                                    <th style="display:none;">MobileNo</th>*@
+
+
+
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var item in Model)
+                            {
+
+                                <tr id="Tr_@item.Id.ToString()">
+                                    <td style="width:200px!important;" id="tdName_@item.Id.ToString()">@item.Name</td>
+                                    <td id="tdAddress_@item.Id.ToString()">@item.Address</td>
+                                    <td id="tdCity_@item.Id.ToString()">@item.City</td>
+                                    <td id="tdState_@item.Id.ToString()">@item.State</td>
+                                    <td id="tdPincode_@item.Id.ToString()">@item.Pincode</td>
+                                        @*<td id="tdMobileNo_@item.Id.ToString()">@item.MobileNo</td>*@
+
+                                    <td id="txtName_@item.Id.ToString()" style="display:none;">
+                                        <input class="form-control" type='text' id="txtName_@item.Id.ToString()" value="@item.Name" />
+                                    </td>
+                                    <td id="txtAddress_@item.Id.ToString()" style="display:none;">
+                                        <textarea class="form-control" id="txtAddress_@item.Id.ToString()" value="@item.Address">@item.Address </textarea>
+                                    </td>
+
+                                    <td id="txtCity_@item.Id.ToString()" style="display:none;">
+                                        <input class="form-control" type='text' id="txtCity_@item.Id.ToString()" value="@item.City" />
+                                    </td>
+                                    <td id="txtState_@item.Id.ToString()" style="display:none;">
+                                        <input class="form-control" type='text' id="txtState_@item.Id.ToString()" value="@item.State" />
+                                    </td>
+                                    <td id="txtPincode_@item.Id.ToString()" style="display:none;">
+                                            <input class="form-control" type='text' id="txtPincode_@item.Id.ToString()" value="@item.Pincode" />
+                                        </td>
+                                        @*<td id="txtMobileNo_@item.Id.ToString()" style="display:none;">
+                                            <input class="form-control" type='text' id="txtMobileNo_@item.Id.ToString()" value="@item.MobileNo" />
+                                        </td>*@
+
+
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="row mt-2">
+        <form method="post">
+            <div class="row">
+                <div class="col-md-4">
+                    <table id="tblAddressBookInfo" class="table table-bordered table-hover tab-content text-sm-start" style="width:1200px!important;">
+                        <thead>
+                            <tr>
+                                <th class="hideCol">Name</th>
+                                <th class="hideCol">Address</th>
+                                <th class="hideCol">City</th>
+                                <th class="hideCol">State</th>
+                                <th class="hideCol">Pincode</th>
+                                <th class="hideCol">MobileNo</th>
+                                <th colspan="2">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr id="Tr_@item.Id.ToString()">
+                                    <td id="tdName_@item.Id.ToString()">@item.Name</td>
+                                    <td id="tdAddress_@item.Id.ToString()">@item.Address</td>
+                                    <td id="tdCity_@item.Id.ToString()">@item.City</td>
+                                    <td id="tdState_@item.Id.ToString()">@item.State</td>
+                                    <td id="tdPincode_@item.Id.ToString()">@item.Pincode</td>
+                                    <td id="tdMobileNo_@item.Id.ToString()">@item.MobileNo</td>
+
+                                    <td id="txtName_@item.Id.ToString()" style="display:none;">
+                                        <input class="form-control" type='text' id="txtName_@item.Id.ToString()" value="@item.Name" />
+                                    </td>
+                                    <td id="txtAddress_@item.Id.ToString()" style="display:none;">
+                                        <textarea class="form-control" id="txtAddress_@item.Id.ToString()" value="@item.Address">@item.Address </textarea>
+                                    </td>
+
+                                    <td id="txtCity_@item.Id.ToString()" style="display:none;">
+                                        <input class="form-control" type='text' id="txtCity_@item.Id.ToString()" value="@item.City" />
+                                    </td>
+                                    <td id="txtState_@item.Id.ToString()" style="display:none;">
+                                        <input class="form-control" type='text' id="txtState_@item.Id.ToString()" value="@item.State" />
+                                    </td>
+                                    <td id="txtPincode_@item.Id.ToString()" style="display:none;">
+                                        <input class="form-control" type='text' id="txtPincode_@item.Id.ToString()" value="@item.Pincode" />
+                                    </td>
+                                    <td id="txtMobileNo_@item.Id.ToString()" style="display:none;">
+                                        <input class="form-control" type='text' id="txtMobileNo_@item.Id.ToString()" value="@item.MobileNo" />
+                                    </td>
+                                    <td>
+
+                                        <button type="button" class="btn btn-primary btn-sm " id="btnEditAddress_@item.Id.ToString()" onclick="editRowAddressData(@item.Id.ToString())">
+                                            <i class="fa fa-edit"></i> Edit
+                                        </button>
+
+                                        <button class="btn btn-success btn-sm" id="btnUpdateAddress_@item.Id.ToString()" style="display:none;" onclick="saveAddressData(@item.Id.ToString(),@item.Id.ToString())">
+                                            <i class="fa fa-save"></i> Update
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-danger btn-sm" id="btnDeleteAddress_@item.Id.ToString()" formaction="/addressbook/delete/@item.Id">
+                                            <i class="fa fa-trash"></i> Delete
+                                        </button>
+                                        <button type="button" class="btn btn-warning btn-sm" onclick="removeAddressData(@item.Id)" style="display:none;" id="btnCancelAddress_@item.Id.ToString()">
+                                            <i class="fa fa-undo"></i> Cancel
+                                        </button>
+
+                                    </td>
+
+                                </tr>
+
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="row mt-2">
+        <form method="post">
+            <div class="row">
+                <div class="col-md-4">
+                    <table id="tblSample" class="table table-bordered table-hover tab-content text-sm-start" style="width:1200px!important;">
+                        <thead>
+                            <tr>
+                                <th class="hideCol">Name</th>
+                                <th style="display:none;">Name</th>
+                                <th class="hideCol">Address</th>
+                                <th style="display:none;">Name</th>
+                                <th class="hideCol">City</th>
+                                <th style="display:none;">Name</th>
+                                <th class="hideCol">State</th>
+                                <th style="display:none;">Name</th>
+                                <th class="hideCol">Pincode</th>
+                                <th style="display:none;">Name</th>
+                                <th class="hideCol">MobileNo</th>
+                                <th style="display:none;">Name</th>
+                                <th colspan="2">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr id="Tr_@item.Id.ToString()">
+                                    <td id="tdName_@item.Id.ToString()">@item.Name</td>
+                                    <td id="tdAddress_@item.Id.ToString()">@item.Address</td>
+                                    <td id="tdCity_@item.Id.ToString()">@item.City</td>
+                                    <td id="tdState_@item.Id.ToString()">@item.State</td>
+                                    <td id="tdPincode_@item.Id.ToString()">@item.Pincode</td>
+                                    <td id="tdMobileNo_@item.Id.ToString()">@item.MobileNo</td>
+
+                                    <td id="txtName_@item.Id.ToString()" style="display:none;">
+                                        <input class="form-control" type='text' id="txtName_@item.Id.ToString()" value="@item.Name" />
+                                    </td>
+                                    <td id="txtAddress_@item.Id.ToString()" style="display:none;">
+                                        <textarea class="form-control" id="txtAddress_@item.Id.ToString()" value="@item.Address">@item.Address </textarea>
+                                    </td>
+
+                                    <td id="txtCity_@item.Id.ToString()" style="display:none;">
+                                        <input class="form-control" type='text' id="txtCity_@item.Id.ToString()" value="@item.City" />
+                                    </td>
+                                    <td id="txtState_@item.Id.ToString()" style="display:none;">
+                                        <input class="form-control" type='text' id="txtState_@item.Id.ToString()" value="@item.State" />
+                                    </td>
+                                    <td id="txtPincode_@item.Id.ToString()" style="display:none;">
+                                        <input class="form-control" type='text' id="txtPincode_@item.Id.ToString()" value="@item.Pincode" />
+                                    </td>
+                                    <td id="txtMobileNo_@item.Id.ToString()" style="display:none;">
+                                        <input class="form-control" type='text' id="txtMobileNo_@item.Id.ToString()" value="@item.MobileNo" />
+                                    </td>
+                                    <td>
+
+                                        <button type="button" class="btn btn-primary btn-sm " id="btnEditAddress_@item.Id.ToString()" onclick="editRowAddressData(@item.Id.ToString())">
+                                            <i class="fa fa-edit"></i> Edit
+                                        </button>
+
+                                        <button class="btn btn-success btn-sm" id="btnUpdateAddress_@item.Id.ToString()" style="display:none;" onclick="saveAddressData(@item.Id.ToString(),@item.Id.ToString())">
+                                            <i class="fa fa-save"></i> Update
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-danger btn-sm" id="btnDeleteAddress_@item.Id.ToString()" formaction="/addressbook/delete/@item.Id">
+                                            <i class="fa fa-trash"></i> Delete
+                                        </button>
+                                        <button type="button" class="btn btn-warning btn-sm" onclick="removeAddressData(@item.Id)" style="display:none;" id="btnCancelAddress_@item.Id.ToString()">
+                                            <i class="fa fa-undo"></i> Cancel
+                                        </button>
+
+                                    </td>
+
+                                </tr>
+
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+</div>
+
+                @section scripts{
+
+                    <script>
+                        function AddRowAddressData(incrAddressID) {
+                            //$("#exampleModal").modal("show");
+                            //return;
+                            //var header = "This is my dynamic header";
+                            //var content = "This is my dynamic content";
+                            //var strSubmitFunc = "applyButtonFunc()";
+                            //var btnText = "Just do it!";
+                            //doModal('myModal', header, content, strSubmitFunc, btnText);
+                            //$("#exampleModal").modal("show");
+                            //return;
+
+                            console.log("incrAddressID :" + incrAddressID);
+                            var html =
+                                '<tr id ="Tr_' + incrAddressID + '"> '
+                                + '<td id="txtName_' + incrAddressID + '"><input class="form-control" type="text" id="txtName_' + incrAddressID + '"   value=""  /></td>'
+                                + '<td id="txtAddress_' + incrAddressID + '"><textarea class="form-control" type="text" id="txtAddress_' + incrAddressID + '"   value=""  ></textarea></td>'
+                                + '<td id="txtCity_' + incrAddressID + '"><input class="form-control" type="text" id="txtCity_' + incrAddressID + '"   value=""  /></td>'
+                                + '<td id="txtState_' + incrAddressID + '"><input class="form-control" type="text" id="txtState_' + incrAddressID + '"   value=""  /></td>'
+                                + '<td id="txtPincode_' + incrAddressID + '"><input class="form-control" type="text" id="txtPincode_' + incrAddressID + '"   value=""  /></td>'
+                                + '<td id="txtMobileNo_' + incrAddressID + '"><input class="form-control" type="text" id="txtMobileNo_' + incrAddressID + '"   value=""  /></td>'
+                                + '<td >'
+                                + '<button type="button" class="btn btn-success  btn-sm"  id="btnUpdateAddress_' + incrAddressID + '"  onclick="saveAddressData(' + incrAddressID + ')"/>'
+                                + '<i class="fa fa-save"></i> Save'
+                                + '</button>'
+                                + '</td>'
+                                + '<td >'
+                                + '<button type="button" class="btn btn-warning  btn-sm" id="btnCancelAddress_' + incrAddressID + '"  value="Cancel" onclick="removeRow(this)";/>'
+                                + '<i class="fa fa-undo"></i> Cancel'
+                                + '</button>'
+                                + '</td>'
+                                + '</tr>';
+
+
+                            // row.append(col1, col2, col3).prependTo("#mytable");
+                            $(html).prependTo($("#tblAddressBookInfo"));
+
+                            $("#btnAddAddress").attr("disabled", true);
+
+                        }
+                        function removeRow(obj) {
+                            console.log("removerow");
+                            var tr = $(obj).closest('tr');
+                            tr.remove();
+                            $("#btnAddAddress").attr("disabled", false);
+                        };
+                    </script>
+                    <script>
+                        function editRowAddressData(i) {
+                            var tbname = "#tblAddressBookInfo";
+                            $(tbname).find('#btnEditAddress_' + i.toString()).hide();
+                            $(tbname).find('#btnDeleteAddress_' + i.toString()).hide();
+
+
+                            $(tbname).find('#tdName_' + i.toString()).hide();
+                            $(tbname).find('#tdAddress_' + i.toString()).hide();
+                            $(tbname).find('#tdCity_' + i.toString()).hide();
+                            $(tbname).find('#tdState_' + i.toString()).hide();
+                            $(tbname).find('#tdPincode_' + i.toString()).hide();
+                            $(tbname).find('#tdMobileNo_' + i.toString()).hide();
+
+
+
+
+                            $(tbname).find('#btnUpdateAddress_' + i.toString()).show();
+                            $(tbname).find('#btnCancelAddress_' + i.toString()).show();
+
+
+
+                            $(tbname).find('#txtName_' + i.toString()).show();
+                            $(tbname).find('#txtAddress_' + i.toString()).show();
+                            $(tbname).find('#txtCity_' + i.toString()).show();
+                            $(tbname).find('#txtState_' + i.toString()).show();
+                            $(tbname).find('#txtPincode_' + i.toString()).show();
+                            $(tbname).find('#txtMobileNo_' + i.toString()).show();
+
+
+
+                        }
+
+
+                        function removeAddressData(i) {
+                            var tbname = "#tblAddressBookInfo";
+                            $(tbname).find('#btnEditAddress_' + i.toString()).show();
+                            $(tbname).find('#btnDeleteAddress_' + i.toString()).show();
+
+
+                            $(tbname).find('#tdName_' + i.toString()).show();
+                            $(tbname).find('#tdAddress_' + i.toString()).show();
+                            $(tbname).find('#tdCity_' + i.toString()).show();
+                            $(tbname).find('#tdState_' + i.toString()).show();
+                            $(tbname).find('#tdPincode_' + i.toString()).show();
+                            $(tbname).find('#tdMobileNo_' + i.toString()).show();
+
+
+
+                            $(tbname).find('#btnUpdateAddress_' + i.toString()).hide();
+                            $(tbname).find('#btnCancelAddress_' + i.toString()).hide();
+
+
+                            $(tbname).find('#txtName_' + i.toString()).hide();
+                            $(tbname).find('#txtAddress_' + i.toString()).hide();
+                            $(tbname).find('#txtCity_' + i.toString()).hide();
+                            $(tbname).find('#txtState_' + i.toString()).hide();
+                            $(tbname).find('#txtPincode_' + i.toString()).hide();
+                            $(tbname).find('#txtMobileNo_' + i.toString()).hide();
+
+
+                        }
+
+                    </script>
+
+                    <script>
+                        function saveAddressData(i) {
+                            if (validateProdForm(i)) {
+                                var tbname = "#tblAddressBookInfo";
+                                var iAddressID = i;
+
+                                var sName = $(tbname).find("input[id=txtName_" + i.toString() + "]").val();
+                                var sAddress = $(tbname).find("textarea[id=txtAddress_" + i.toString() + "]").val();
+                                var sCity = $(tbname).find("input[id=txtCity_" + i.toString() + "]").val();
+                                var sState = $(tbname).find("input[id=txtState_" + i.toString() + "]").val();
+                                var sPincode = $(tbname).find("input[id=txtPincode_" + i.toString() + "]").val();
+                                var sMobileNo = $(tbname).find("input[id=txtMobileNo_" + i.toString() + "]").val();
+
+                                var addressBookModel = {
+                                    Id: iAddressID,
+                                    Name: sName,
+                                    Address: sAddress,
+                                    City: sCity,
+                                    State: sState,
+                                    Pincode: sPincode,
+                                    MobileNo: sMobileNo,
+                                };
+
+                                var urlOperation = "/AddressBook/InsertJson";
+
+                                if (iAddressID > 0) {
+                                    urlOperation = "/AddressBook/UpdateJson";
+                                }
+                                $.ajax({
+                                    url: urlOperation,
+                                    type: "POST",
+                                    data: { AddressBookModel: addressBookModel },
+                                    success: function (data) {
+                                        if (data.status == "Success") {
+
+                                            $("#exampleModal").modal("show");
+                                        }
+
+                                    }
+                                });
+                            }
+                        }
+                        function validateProdForm(i) {
+                            var flag = true;
+                            var msg = "";
+
+                            var CustName = $("#tblProdinfo").find("input[id=txtCName_" + i.toString() + "]").val();
+                            var ProdName = $("#tblProdinfo").find("input[id=txtPName_" + i.toString() + "]").val();
+                            var ProdPrice = $("#tblProdinfo").find("input[id=txtPPrice_" + i.toString() + "]").val();
+
+                            if (CustName == "") {
+                                msg += "Customer Name at level " + i + " is required. " + "\n";
+                                $("#txtCName_" + i.toString()).val('');
+                                flag = false;
+                            }
+
+                            if (ProdName == "") {
+                                msg += "Product Name at level " + i + " is required. " + "\n";
+                                $("#txtPName_" + i.toString()).val('');
+                                flag = false;
+                            }
+
+                            if (ProdPrice == "") {
+                                msg += "Product Price at level " + i + " is required. " + "\n";
+                                $("#txtPPrice_" + i.toString()).val('');
+                                flag = false;
+                            }
+
+                            if (flag == false) {
+                                BootstrapDialog.show({
+                                    title: 'Warning!',
+                                    message: msg
+                                });
+                            }
+
+                            return flag;
+                        }
+                    </script>
+
+                    <script>
+
+                        function doModal(placementId, heading, formContent, strSubmitFunc, btnText) {
+
+                            strSubmitFunc = '/Address/Index'
+                            btnText = 'Ok'
+                            var html = '<div id="modalWindow" class="modal hide fade in" style="display:none;">';
+                            html += '<div class="modal-header">';
+                            html += '<a class="close" data-dismiss="modal">×</a>';
+                            html += '<h4>' + heading + '</h4>'
+                            html += '</div>';
+                            html += '<div class="modal-body">';
+                            html += '<p>';
+                            html += formContent;
+                            html += '</div>';
+                            html += '<div class="modal-footer">';
+                            if (btnText != '') {
+                                html += '<span class="btn btn-success"';
+                                html += ' onClick="' + strSubmitFunc + '">' + btnText;
+                                html += '</span>';
+                            }
+                            html += '<span class="btn" data-dismiss="modal">';
+                            html += 'Close';
+                            html += '</span>'; // close button
+                            html += '</div>';  // footer
+                            html += '</div>';  // modalWindow
+                            $("#" + placementId).html(html);
+                            $("#" + placementId).modal("show");
+                        }
+
+
+                        function hideModal() {
+                            // Using a very general selector - this is because $('#modalDiv').hide
+                            // will remove the modal window but not the mask
+                            $('.modal.in').modal('hide');
+                        }
+                    </script>
+
+
+
+                    <script src="~/js/jquery.dataTables.min.js"></script>
+                    <script src="~/js/jszip.min.js"></script>
+                    <script src="~/js/dataTables.buttons.min.js"></script>
+                    <script src="~/js/buttons.html5.min.js"></script>
+                    <script src="~/js/jquery-ui.min.js"></script>
+                    <link href="~/css/jquery.dataTables.min.css" rel="stylesheet" />
+                    <script>
+
+
+                        $(document).ready(function () {
+                            gridDataTableView("Grid Example.xls");
+                        });
+
+                        gridDataTableView = function (fname) {
+                            $('#tblGrid').dataTable({
+                                "bFilter": true,
+                                "bLengthChange": false, "bPaginate": true, "bInfo": true,
+                                dom: 'Bfrtip',
+                                "order": [[0, 'desc'], [1, 'desc']],
+                                buttons: [{ extend: 'excelHtml5', text: 'Export to Excel', className: 'link_button', title: fname }]
+                            });
+                        }
+                    </script>
+
+
+                }

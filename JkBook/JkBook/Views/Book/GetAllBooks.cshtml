@@ -1,16 +1,31 @@
-﻿
+﻿@{
+
+    ViewData["Title"] = "All Books";
+}
+@model IEnumerable<BookModel>
 @{
-    Layout = null;
+    var lstParameter = new Dictionary<string, string>()
+    {
+        { "Id",""},
+        { "companyname","JK Soft"},
+        { "timeofaction",DateTime.Now.ToString()}
+    };
 }
 
-<!DOCTYPE html>
+<div class="container">
+    <h1 class="display-6">All Books</h1>
+    <div class="row">
+        @foreach (var book in Model)
+        {
+            lstParameter["Id"] = book.Id.ToString();
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>GetAllBooks</title>
-</head>
-<body>
-    <h1>All book list</h1>
-</body>
-</html>
+            <div class="col-md-4">
+                <partial name="_bookThumbnail" model="@book" />
+            </div>
+
+
+
+        }
+
+    </div>
+</div>

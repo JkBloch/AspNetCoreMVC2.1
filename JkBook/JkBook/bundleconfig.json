@@ -1,0 +1,25 @@
+[
+  {
+    "outputFileName": "wwwroot/css/site.min.css",
+    "inputFiles": [
+      "wwwroot/css/Site.css",
+      "wwwroot/css/NewStyle.css"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    }
+  }
+  //,
+  //{
+  //  "outputFileName": "wwwroot/js/output-min.js",
+  //  "inputFiles": [
+  //    "wwwroot/js/jsfile1.js",
+  //    "wwwroot/js/jsfile2.js"
+  //  ],
+  //  "minify": {
+  //    "enabled": false,
+  //    "renameLocals": true
+  //  }
+  //}
+]

@@ -1,0 +1,42 @@
+﻿@model JkBook.Models.DepartmentModel
+
+@{
+    ViewData["Title"] = "InsertDepartment";
+}
+
+<h4>Department </h4>
+<hr />
+<div class="row">
+    
+        <form asp-controller="department" asp-action="Insert" method="post">
+            <div class="row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            </div>
+            <div class="row">
+             
+                    <div class="col">
+                        <div class="form-group">
+                            <input asp-for="DepartmentCode" class="form-control" placeholder="Department Code" />
+                            <span asp-validation-for="DepartmentCode" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <input asp-for="DepartmentName" class="form-control" placeholder="Department Name" />
+                            <span asp-validation-for="DepartmentName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <input type="submit" value="Add" class="btn btn-success" asp-controller="department" asp-action="insert" />
+                        </div>
+                    </div>
+                </div>
+
+            
+            
+              
+        </form>
+   
+</div>
+

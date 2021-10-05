@@ -1,0 +1,92 @@
+﻿@model CustomTestModel
+
+<div class="container">
+    <h5 class="display-7"> Data Type and custom field test</h5>
+
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="MyField1"></label>
+            <input asp-for="MyField1" class="form-control" />
+            <span asp-validation-for="MyField1" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="MyField2"></label>
+            <input asp-for="MyField2" class="form-control" />
+            <span asp-validation-for="MyField2" class="text-danger"></span>
+        </div>
+        @*<div class="form-group">
+            <label asp-for="MyField3"></label>
+            <input asp-for="MyField3" class="form-control" />
+            <span asp-validation-for="MyField3" class="text-danger"></span>
+        </div>*@
+        <div class="form-group">
+            <label asp-for="MyField4"></label>
+            <input asp-for="MyField4" class="form-control" />
+            <span asp-validation-for="MyField4" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="MyField5"></label>
+            <input asp-for="MyField5" class="form-control" />
+            <span asp-validation-for="MyField5" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="MyField6"></label>
+            <input asp-for="MyField6" class="form-control" />
+            <span asp-validation-for="MyField6" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="MyField7"></label>
+            <input asp-for="MyField7" class="form-control" />
+            <span asp-validation-for="MyField7" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="MyField8"></label>
+            <input asp-for="MyField8" class="form-control" />
+            <span asp-validation-for="MyField8" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="MyField9"></label>
+            <input asp-for="MyField9" class="form-control" />
+            <span asp-validation-for="MyField9" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="MyField10"></label>
+            <input asp-for="MyField10" class="form-control" />
+            <span asp-validation-for="MyField10" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="MyField11"></label>
+            <input asp-for="MyField11" class="form-control" />
+            <span asp-validation-for="MyField11" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="MyField12"></label>
+            <input asp-for="MyField12" class="form-control" />
+            <span asp-validation-for="MyField12" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="MyField13"></label>
+            <input asp-for="MyField13" class="form-control" />
+            <span asp-validation-for="MyField13" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="MyField14"></label>
+            <input asp-for="MyField14" class="form-control" />
+            <span asp-validation-for="MyField14" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="MyField15"></label>
+            <input asp-for="MyField15" class="form-control" />
+            <span asp-validation-for="MyField15" class="text-danger"></span>
+        </div>
+
+
+
+        <div class="form-group">
+            <br />
+            <input type="submit" class="btn btn-primary" value="Add Book" />
+            @*<input type="submit" class="btn btn-primary" value="Add Book Async" formaction="AddNewBook_Async" />*@
+        </div>
+    </form>
+</div>

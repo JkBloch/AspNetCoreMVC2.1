@@ -1,0 +1,27 @@
+﻿@inject Microsoft.AspNetCore.Identity.SignInManager<ApplicationUser> _signManager
+
+@if (_signManager.IsSignedIn(User))
+{
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            @*@User.Identity.Name*@
+            @(User.FindFirst("UserFirstName").Value+ " " + User.FindFirst("UserLasttName").Value)
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" asp-controller="Account" asp-action="Logout">Logout</a></li>
+            <li><a class="dropdown-item" asp-controller="Account" asp-action="ChangePassword">ChangePassword</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+        </ul>
+    </li>
+
+}
+else
+{
+    <li class="nav-item d-flex flex-row-reverse">
+        <a class="btn btn-outline-primary" asp-controller="Account" asp-action="Login" asp-route-returnUrl="@Context.Request.Path" >Login</a>
+        <a class="btn btn-primary" asp-controller="Account" asp-action="Signup">Register</a>
+    </li>
+}
+

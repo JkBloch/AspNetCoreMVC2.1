@@ -1,0 +1,61 @@
+﻿@using JkBook.Models;
+@model EmployeeViewModel
+@{
+    ViewData["Title"] = "Employee";
+}
+
+<div class="container">
+    <h5 class="display-6">Employee</h5>
+    <form method="post">
+        <input type="submit" value="New" formaction="/employee/new" class="btn btn-primary" />
+        <br /><br />
+        <table class="table" border="1" cellpadding="10">
+            <tr>
+                <th>EmployeeID</th>
+                <th>EmployeeCode</th>
+                <th>EmployeeName</th>
+                <th>Gender</th>
+                <th>DateOfBirth</th>
+                <th colspan="2">Actions</th>
+            </tr>
+            @{
+                foreach (var item in Model.Employees)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.EmployeeCode </td>
+                        <td>@item.EmployeeName</td>
+                        <td>@item.Gender</td>
+                        <td>@item.DateOfBirth</td>
+                        <td>
+                            <input type="submit" formaction="/employee/select/@item.Id" class="btn btn-info" value="Select" />
+                        </td>
+                        <td>
+                            <input type="submit" class="btn btn-danger" formaction="/employee/delete/@item.Id" value="Delete" />
+                        </td>
+                    </tr>
+                }
+            }
+        </table>
+    </form>
+    
+
+    <br /><br />
+    @{
+        if (Model.SelectedEmployee != null)
+        {
+            if (Model.DisplayMode == "ReadOnly")
+            {
+                <partial name="ShowEmployee" model="Model.SelectedEmployee" />
+            }
+            if (Model.DisplayMode == "ReadWrite")
+            {
+                <partial name="EditEmployee" model="Model.SelectedEmployee" />
+            }
+        }
+        if (Model.DisplayMode == "WriteOnly")
+        {
+            <partial name="InsertEmployee" model="new JkBook.Models.EmployeeModel()" />
+        }
+    }
+</div>

@@ -1,0 +1,94 @@
+﻿@using Microsoft.Extensions.Configuration;
+
+@inject IConfiguration _configuration
+@{ 
+    ViewBag.MessageFlag = _configuration.GetSection("NewBookAlert").GetValue<bool>("DisplayAlert");
+    var Message = _configuration.GetSection("NewBookAlert").GetValue<string>("BookMessage");
+
+    if (ViewData["Title"].ToString() == "Home")
+    {
+        ViewBag.MessageFlag = true;
+    }
+
+}
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+                <img src="~/images/logo.png" width="30" height="30" asp-append-version="true" />
+                @_configuration["AppName"]
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" asp-controller="home" asp-action="index">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" asp-controller="home" asp-action="aboutus">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" asp-controller="home" asp-action="contactus">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" asp-controller="book" asp-action="GetAllBooks">All Books</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" asp-controller="book" asp-action="AddNewBook">Add neew Book</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" asp-area="Admin" asp-controller="Home" asp-action="Index">Admin</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            HR
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" asp-controller="Employee" asp-action="index">Employee</a></li>
+                            <li><a class="dropdown-item" asp-controller="department" asp-action="index">Department</a></li>
+                            <li><a class="dropdown-item" href="#">Designation</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Branch</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" asp-controller="addressbook" asp-action="index">AddressBook</a>
+                    </li>
+                    @*<li class="nav-item">
+            <a class="nav-link" aria-current="page" asp-protocol="http" asp-host="google.com">Google</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+        </li>*@
+                </ul>
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <partial name="_LoginInfo" />
+                </ul>
+                <form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+    @*<div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>*@
+    @if (ViewBag.MessageFlag)
+    {
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @Message
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+
+    }
+
+</header>
